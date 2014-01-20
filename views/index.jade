@@ -1,0 +1,49 @@
+extends layout
+
+block content
+    .row
+      .col-md-12
+        h2 Add Person/Expense
+      form(role='form')
+        .col-md-6
+          .form-group
+            label(for='expenseName') Name
+            input#expenseName.form-control(ng-model='expense.person', type='name', placeholder='Enter name')
+          .form-group
+            label(for='expenseName') Bought
+            input#expenseName.form-control(ng-model='expense.bougth', type='name', placeholder='What he/she bought?')
+        .col-md-6
+          .form-group
+            label(for='expenseName') Amount
+            input#expenseName.form-control(ng-model='expense.amount', type='money', placeholder='Enter amount $$$')
+          button.btn.btn-primary.pull-right(type='submit', ng-click='addExpense()') Create Expense
+    .row
+      .col-md-12
+        h1 Divide & Conquer
+        hr
+        h2
+          | Total: {{ total }} € 
+          small
+            | / {{ expenses.length }}
+            span(ng-show='expenses.length > 1')
+              |  People
+            span(ng-hide='expenses.length > 1')
+              |  Person
+          small.pull-right(ng-show='expenses.length > 0')
+            span.label.label-default {{ (total / expenses.length).toFixed(2) }} &euro;
+            |  Per Person
+        table.table.table-striped
+          tr
+            th Person Name
+            th Bougth
+            th Amount Spend
+            th Owed
+            th
+          tr(ng-repeat='e in expenses')
+            td {{ e.person }}
+            td {{ e.bougth }}
+            td {{ e.amount.toFixed(2) }} &euro;
+            td
+              span.label(style='font-size: 14px;', ng-class="{'label-success': e.owed > 0, 'label-danger': e.owed < 0}") {{ e.owed.toFixed(2) }} &euro;
+            td
+              button.btn.btn-primary(ng-click="editExpense(e)") Editar

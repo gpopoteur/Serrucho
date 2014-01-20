@@ -1,0 +1,33 @@
+doctype html
+html(lang="en",ng-app="app")
+	head
+		meta(charset="utf-8")
+		meta(http-equiv="X-UA-Compatible", content="IE=edge")
+		meta(name="description", content="")
+		meta(name="author", content="")
+
+		title= title
+		link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+	body(ng-controller="AppController")
+		.navbar.navbar-default.navbar-static-top(role="navigation")
+			.container
+				.navbar-header
+					button(type="button",class="navbar-toggle",data-toggle="collapse",data-target=".navbar-collapse")
+						span.sr-only Toggle navigation
+						span.icon-bar
+						span.icon-bar
+						span.icon-bar
+					a.navbar-brand(href="#") Serrucho App
+				.navbar-collapse.collapse
+					ul.nav.navbar-nav
+						li.active
+							a(href="#") Home
+						li
+							a(href="#about") About
+		.container
+			block content
+
+		script(src="/javascripts/angular.min.js")
+		script.
+			var app = angular.module("app", [], function () { });
+		script(src="/javascripts/AppController.js")
