@@ -3,9 +3,11 @@
  * Module dependencies.
  */
 
-var express = require('express');
-var http = require('http');
-var path = require('path');
+var express = require('express')
+ , http = require('http')
+ , path = require('path')
+ , config = require('./config')
+ , mongodb = require('mongodb');
 
 var app = express();
 
@@ -26,13 +28,34 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-// Inport Controllers
-var HomeController = require('./controllers/HomeController');
+// MongoDb
+var MongoServer = mongodb.Server,
+ Db = mongodb.Db,
+ BSON = mongodb.BSONPure;
+
+var mongoServer = new MongoServer(config.host, config.port, { auto_reconnect: true }),
+	db = Db(config.db, mongoServer, { safe: true });
+
+db.open(function (err, db) {
+	db.authenticate(config.db, config.pass, function (err, success) {
+		// Do Something ...
+	});
+	if(!err) {
+		console.log('Connected to DB');
+	}else{
+		console.log('Unable to connect to DB');
+	}
+});
+
+// Import Controllers
+var HomeController = require('./controllers/HomeController'),
+	ApiController = require('./controllers/ApiController');
 
 // Create Controller Instances
 var homeController = new HomeController();
+var ApiController = new ApiController();
 
-// Routes
+// Set Routes
 app.get('/', homeController.getIndex);
 
 http.createServer(app).listen(app.get('port'), function(){
