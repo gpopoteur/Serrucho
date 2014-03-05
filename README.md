@@ -1,4 +1,4 @@
-# Serrucho APP
+# Handsaw APP
 
 A simple app to split the tab between friends and coworkers.
 
