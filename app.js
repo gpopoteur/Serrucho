@@ -47,6 +47,9 @@ db.open(function (err, db) {
 	}
 });
 
+// Import models
+
+
 // Import Controllers
 var HomeController = require('./controllers/HomeController'),
 	ApiController = require('./controllers/ApiController');
@@ -57,6 +60,7 @@ var ApiController = new ApiController();
 
 // Set Routes
 app.get('/', homeController.getIndex);
+app.get('/:id', homeController.getIndex);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
